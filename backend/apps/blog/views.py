@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework import viewsets, permissions, response, status
-from blog.serializers import PostSerializer, ImageSerializer
-from blog.models import Post, Image
+from blog.serializers import PostSerializer, ImageSerializer, CommentSerializer
+from blog.models import Post, Image, Comment
 from blog.permissions import IsGetOrIsAuthenticated
 
 
@@ -45,3 +45,14 @@ class ImageViewSet(viewsets.ModelViewSet):
          super().destroy(*args, **kwargs)
          return response.Response(serializer.data['image_id'], status=status.HTTP_200_OK)
 
+class CommentViewSet(viewsets.ModelViewSet):
+    queryset = Comment.objects.all()
+    permissions_classes = [
+        permissions.AllowAny
+    ]
+    serializer_class = CommentSerializer
+
+    def destroy(self, *args, **kwargs):
+        serializer = self.get_serializer(self.get_object())
+        super().destroy(*args, **kwargs)
+        return response.Response(serializer.data['comment_id'], status=status.HTTP_200_OK)

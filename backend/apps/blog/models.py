@@ -21,3 +21,15 @@ class Image(models.Model):
     class Meta:
         managed = False
         db_table = 'image'
+
+class Comment(models.Model):
+    comment_id = models.AutoField(primary_key=True)
+    post = models.ForeignKey('Post', db_column='post', on_delete=models.CASCADE)
+    author = models.CharField(max_length=50)
+    author_email = models.CharField(max_length=50)
+    text = models.TextField()
+    created_date = models.DateTimeField()
+
+    class Meta:
+        managed = False
+        db_table = 'comment'
