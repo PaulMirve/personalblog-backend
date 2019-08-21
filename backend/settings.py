@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'accounts',
     'knox',
-    'corsheaders'
+    'corsheaders',
+    'django_filters'
 ]
 
 CORS_ORIGIN_ALLOW_ALL = False

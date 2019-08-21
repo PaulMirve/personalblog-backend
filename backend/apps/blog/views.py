@@ -3,7 +3,7 @@ from rest_framework import viewsets, permissions, response, status
 from blog.serializers import PostSerializer, ImageSerializer, CommentSerializer
 from blog.models import Post, Image, Comment
 from blog.permissions import IsGetOrIsAuthenticated
-
+from django_filters.rest_framework import DjangoFilterBackend
 
 # Create your views here.
 class PostViewSet(viewsets.ModelViewSet):
@@ -51,6 +51,8 @@ class CommentViewSet(viewsets.ModelViewSet):
         permissions.AllowAny
     ]
     serializer_class = CommentSerializer
+    filter_backends = (DjangoFilterBackend,)
+    filter_fields = ("post",)
 
     def destroy(self, *args, **kwargs):
         serializer = self.get_serializer(self.get_object())
